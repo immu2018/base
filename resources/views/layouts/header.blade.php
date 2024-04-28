@@ -10,14 +10,6 @@
         </h1>
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        <span class="nav-link-icon d-md-none d-lg-inline-block">
-                            <!-- Inline SVG for the home icon -->
-                        </span>
-                        <span class="nav-link-title">Home</span>
-                    </a>
-                </li>
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
@@ -28,25 +20,52 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }}
+                    @role('admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/users">Manage Users</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/posts">Manage Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/settings">Settings</a>
+                    </li>
+                    @endrole
+
+                    @role('editor')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/editor/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/editor/posts">Manage Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/editor/settings">Settings</a>
+                    </li>
+                    @endrole
+
+                    @role('user')
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/profile">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/settings">Settings</a>
+                    </li>
+                    @endrole
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Logout
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Logout
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 @endguest
             </ul>

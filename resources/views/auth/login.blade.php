@@ -1,5 +1,6 @@
+@extends('layouts.app')
 
-@include('layouts.app')
+@section('content')
 
 <div class="page page-center">
     <div class="container container-tight py-4">
@@ -63,5 +64,4 @@
         </div>
     </div>
 </div>
-
-@include('layouts.footer')
+@endsection
