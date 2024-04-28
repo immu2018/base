@@ -1,7 +1,9 @@
 <?php
-
+use App\Http\Controllers\UserManagerController;
 use App\Http\Controllers\ProfileController;
+
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,3 +35,12 @@ Route::group(['middleware' => ['permission:manage posts']], function () {
         return view('posts.manage');
     });
 });
+
+
+// User management routes
+Route::get('/users', [UserManagerController::class, 'index'])->name('users.index');
+Route::post('/users/{user}/roles', [UserManagerController::class, 'assignRoles'])->name('users.assignRoles');
+Route::post('/users/{user}/permissions', [UserManagerController::class, 'assignPermissions'])->name('users.assignPermissions');
+Route::post('/users/{user}/update', [UserManagerController::class, 'update'])->name('users.update');
+
+ 
